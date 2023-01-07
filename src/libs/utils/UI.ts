@@ -1,15 +1,25 @@
 import $ from "jquery";
+import { extractContentID } from "./URL";
 
 export let darkmode = false;
 
 export const initDarkmode = async () => {
-    $("body").attr("class", localStorage.getItem('theme') === 'dark' ? "dark-mode" : "");
-    $("body").append(
-        `<div id="dark_light" class="left-bottom"><span class="material-symbols-outlined" id="${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}">${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}_mode</span></div>`
+    $("body").attr(
+        "class",
+        localStorage.getItem("theme") === "dark" ? "dark-mode" : ""
     );
-    $(`#${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}`).click(() => {
-        switchMode();
-    });
+    $("body").append(
+        `<div id="dark_light" class="left-bottom"><span class="material-symbols-outlined" id="${
+            localStorage.getItem("theme") === "dark" ? "dark" : "light"
+        }">${
+            localStorage.getItem("theme") === "dark" ? "dark" : "light"
+        }_mode</span></div>`
+    );
+    $(`#${localStorage.getItem("theme") === "dark" ? "dark" : "light"}`).click(
+        () => {
+            switchMode();
+        }
+    );
 };
 
 export const switchMode = async () => {
@@ -31,6 +41,20 @@ export const switchMode = async () => {
         });
         darkmode = true;
     }
-    localStorage.theme = darkmode ? 'dark' : 'light';
+    localStorage.theme = darkmode ? "dark" : "light";
     $("body").attr("class", darkmode ? "dark-mode" : "");
+};
+
+export const renderURLfield = async () => {
+    $('body').append('<div id="urlContainer"></div>');
+    $('#urlContainer').append('<h2>Please provide the F1TV url of the session/video you want to watch :</h2>')
+    $('#urlContainer').append('<input id="url" type="text"></input>')
+    $('#urlContainer').append('<button id="loadURL">Load URL</button>')
+    $('#loadURL').click(async () => {
+        try {
+            console.log(await extractContentID($('#url').val().toString()));
+        } catch (error) {
+            console.error(error);
+        }
+    })
 };
