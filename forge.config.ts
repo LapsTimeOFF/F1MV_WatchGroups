@@ -15,7 +15,7 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       mainConfig,
-      devContentSecurityPolicy: "connect-src 'self' * sentry-ipc:",
+      devContentSecurityPolicy: "connect-src 'self' * f1mv:",
       renderer: {
         config: rendererConfig,
         entryPoints: [

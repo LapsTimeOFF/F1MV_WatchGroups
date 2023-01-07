@@ -27,7 +27,13 @@
  */
 
 import "./index.css";
-import { initDarkmode } from "./ui";
+import { initConfig } from "./libs/utils/F1MV";
+import { initDarkmode } from "./libs/utils/UI";
 
-console.log("[INIT] Starting init UI");
+console.log("[UI] Starting init UI");
 initDarkmode();
+console.log("[UI] UI Init finished");
+
+console.log("[F1MV] Starting init F1MV Config");
+const config = initConfig();
+console.log("[F1MV] F1MV Config Init finished");

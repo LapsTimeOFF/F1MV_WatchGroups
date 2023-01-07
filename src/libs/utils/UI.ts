@@ -3,10 +3,11 @@ import $ from "jquery";
 export let darkmode = false;
 
 export const initDarkmode = async () => {
+    $("body").attr("class", localStorage.getItem('theme') === 'dark' ? "dark-mode" : "");
     $("body").append(
-        '<div id="dark_light" class="left-bottom"><span class="material-symbols-outlined" id="light">light_mode</span></div>'
+        `<div id="dark_light" class="left-bottom"><span class="material-symbols-outlined" id="${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}">${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}_mode</span></div>`
     );
-    $("#light").click(() => {
+    $(`#${localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}`).click(() => {
         switchMode();
     });
 };
@@ -30,5 +31,6 @@ export const switchMode = async () => {
         });
         darkmode = true;
     }
+    localStorage.theme = darkmode ? 'dark' : 'light';
     $("body").attr("class", darkmode ? "dark-mode" : "");
 };
