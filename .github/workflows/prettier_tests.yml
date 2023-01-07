@@ -75,6 +75,6 @@ jobs:
       - run: git remote set-url origin https://lapstimeoff:${{ secrets.GITHUB_TOKEN }}@github.com/lapstimeoff/f1mv_watchgroups.git
       - run: git add .
       - run: git commit -m "Prettier edits"
-      - run: git push origin HEAD:${{ secrets.GITHUB_REF }}
+      - run: git push origin HEAD:stable
     needs: checking-format
     if: ${{ failure() }}
