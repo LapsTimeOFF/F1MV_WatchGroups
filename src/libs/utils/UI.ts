@@ -46,15 +46,22 @@ export const switchMode = async () => {
 };
 
 export const renderURLfield = async () => {
-    $('body').append('<div id="urlContainer"></div>');
-    $('#urlContainer').append('<h2>Please provide the F1TV url of the session/video you want to watch :</h2>')
-    $('#urlContainer').append('<input id="url" type="text"></input>')
-    $('#urlContainer').append('<button id="loadURL">Load URL</button>')
-    $('#loadURL').click(async () => {
-        try {
-            console.log(await extractContentID($('#url').val().toString()));
-        } catch (error) {
-            console.error(error);
+    $("body").append('<div id="urlContainer"></div>');
+    $("#urlContainer").append(
+        "<h2>Please provide the F1TV url of the session/video you want to watch :</h2>"
+    );
+    $("#urlContainer").append('<input id="url" type="text"></input>');
+    $("#urlContainer").append('<button id="loadURL">Load URL</button>');
+    $("#urlContainer").append('<p id="F1TVInfos"></p>');
+    $("#loadURL").click(async () => {
+        const data: number | false = await extractContentID(
+            $("#url").val().toString()
+        );
+
+        if (data === false) {
+            $("#F1TVInfos").text("Please provide a vaild F1TV link.");
+        } else {
+            $("#F1TVInfos").text(`F1TV Link detected, Loading video data...`);
         }
-    })
+    });
 };
