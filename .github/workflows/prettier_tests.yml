@@ -3,7 +3,7 @@ name: Verify if the files are properlly formated
 on:
     workflow_dispatch:
     push:
-        branches: ["*"]
+        branches: "stable"
 
 concurrency:
     group: "formating"
@@ -72,9 +72,9 @@ jobs:
 
       - run: git config --global user.email "actions@github.com"
       - run: git config --global user.name "GitHub Action"
-      - run: git remote set-url origin https://lapstimeoff:${{ secrets.GITHUB_TOKEN }}@github.com/lapstimeoff/f1mv_better_map.git
+      - run: git remote set-url origin https://lapstimeoff:${{ secrets.GITHUB_TOKEN }}@github.com/lapstimeoff/f1mv_watchgroups.git
       - run: git add .
       - run: git commit -m "Prettier edits"
-      - run: git push origin HEAD:${{ secrets.GITHUB_REF }}
+      - run: git push origin HEAD:stable
     needs: checking-format
     if: ${{ failure() }}
