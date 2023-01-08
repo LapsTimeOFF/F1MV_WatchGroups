@@ -1,4 +1,6 @@
 import $ from "jquery";
+import { createDeepLinkURL } from "./F1MV";
+import { getStreamData } from "./F1TV";
 import { extractContentID } from "./URL";
 
 export let darkmode = false;
@@ -54,14 +56,19 @@ export const renderURLfield = async () => {
     $("#urlContainer").append('<button id="loadURL">Load URL</button>');
     $("#urlContainer").append('<p id="F1TVInfos"></p>');
     $("#loadURL").click(async () => {
-        const data: number | false = await extractContentID(
+        const contentId: number | false = await extractContentID(
             $("#url").val().toString()
         );
 
-        if (data === false) {
+        if (contentId === false) {
             $("#F1TVInfos").text("Please provide a vaild F1TV link.");
         } else {
             $("#F1TVInfos").text(`F1TV Link detected, Loading video data...`);
+            
+            const F1TV_Data = await getStreamData('WEB_DASH', contentId);
+            
+            $("#F1TVInfos").text(`${F1TV_Data[0].metadata.emfAttributes.Global_Title} - ${F1TV_Data[0].metadata.genres[0]}`);
+            window.location = await createDeepLinkURL("f1tv", ['detail', contentId, "null"]);
         }
     });
 };
