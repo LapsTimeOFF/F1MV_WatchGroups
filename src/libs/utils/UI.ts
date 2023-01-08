@@ -2,6 +2,7 @@
 import $ from "jquery";
 import { createDeepLinkURL } from "./F1MV";
 import { getStreamData } from "./F1TV";
+import { PartyManager } from "./PartyManager";
 import { extractContentID } from "./URL";
 
 export let darkmode = false;
@@ -80,6 +81,23 @@ export const renderURLfield = async () => {
                 contentId,
                 "null",
             ]);
+            $("#urlContainer").append(
+                '<button id="createURL">Create link</button>'
+            );
+            $("#createURL").click(async () => {
+                const partyManager = new PartyManager();
+                await partyManager.createParty(
+                    `${F1TV_Data[0].metadata.emfAttributes.Global_Title} - ${F1TV_Data[0].metadata.genres[0]}`
+                );
+                const URL = partyManager.getShareableURL();
+                $("#createURL").remove();
+                $("#urlContainer").append(
+                    '<button id="copyURL"><span class="material-symbols-outlined">link</span>Copy link</button>'
+                );
+                $('#copyURL').click(() => {
+                    navigator.clipboard.writeText(URL)
+                })
+            });
         }
     });
 };

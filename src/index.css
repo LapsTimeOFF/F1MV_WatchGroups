@@ -19,23 +19,41 @@ body {
 }
 
 a {
-  color: red;
+    color: red;
 }
 
 input {
-  background-color: rgb(40, 40, 40);
-  border: 0;
-  width: 100%;
-  font-size: 18pt;
-  color: white;
+    background-color: rgb(40, 40, 40);
+    border: 0;
+    width: 100%;
+    font-size: 18pt;
+    color: white;
 }
 
 #loadURL {
-  background-color: rgb(40, 40, 40);
-  border: 0;
-  margin-left: 2px;
-  margin-top: 10px;
-  width: 100%;
-  font-size: 18pt;
-  color: white;
+    background-color: rgb(40, 40, 40);
+    border: 0;
+    margin-left: 2px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 18pt;
+    color: white;
+}
+
+#createURL {
+    background-color: rgb(40, 40, 40);
+    border: 0;
+    margin-left: 2px;
+    margin-top: 10px;
+    font-size: 18pt;
+    color: white;
+}
+
+#copyURL {
+    background-color: rgb(40, 40, 40);
+    border: 0;
+    margin-left: 2px;
+    margin-top: 10px;
+    font-size: 18pt;
+    color: white;
 }
