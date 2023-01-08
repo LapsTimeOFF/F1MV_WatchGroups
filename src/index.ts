@@ -89,7 +89,9 @@ app.on("ready", () => {
             }
 
             if (
-                details.url.match(/^https:\/\/(dev-)?livetiming\.formula1\.com\//)
+                details.url.match(
+                    /^https:\/\/(dev-)?livetiming\.formula1\.com\//
+                )
             ) {
                 console.log("F1 Live Timing Call - Editing headers...");
                 const { referer, Referer, ...headers } = details.requestHeaders;
