@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /**
  * This file will automatically be loaded by webpack and run in the "renderer" context.
  * To learn more about the differences between the "main" and the "renderer" context in
@@ -42,3 +43,8 @@ console.log("[F1MV] F1MV Config Init finished");
 console.log("[Socket] Starting init Socket Config");
 initSocket();
 console.log("[Socket] Socket Config Init finished");
+
+// @ts-ignore
+window.electronAPI.handleJoin((event: any, value: any) => {
+    console.log(event, value);
+});

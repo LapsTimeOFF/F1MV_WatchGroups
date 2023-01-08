@@ -152,7 +152,7 @@ async function handleJoinParty(path?: Array<string>) {
     const window = createWindow();
     
     window.on('ready-to-show', () => {
-        window.webContents.send('')
+        window.webContents.send('join-party', path[1])
     })
 }
 

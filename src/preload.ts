@@ -3,7 +3,7 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electronAPI", {
-    handleCounter: (
+    handleJoin: (
         callback: (event: Electron.IpcRendererEvent, ...args: any[]) => void
     ) => ipcRenderer.on("join-party", callback),
 });
