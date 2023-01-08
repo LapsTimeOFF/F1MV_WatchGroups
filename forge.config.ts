@@ -1,5 +1,4 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
-import { MakerZIP } from "@electron-forge/maker-zip";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 
 import { mainConfig } from "./webpack.main.config";
@@ -16,7 +15,17 @@ const config: ForgeConfig = {
     },
     rebuildConfig: {},
     makers: [
-        new MakerZIP({}, ["darwin", "win32", "linux"]),
+        {
+            name: "@electron-forge/maker-zip",
+            platforms: ["win32", "linux"],
+            config: {}
+        },
+        {
+            name: "@electron-forge/maker-dmg",
+            config: {
+                format: "ULFO",
+            },
+        },
     ],
     plugins: [
         new WebpackPlugin({
