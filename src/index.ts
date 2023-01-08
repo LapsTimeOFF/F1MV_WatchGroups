@@ -22,7 +22,7 @@ const privileges = {
     stream: true,
 };
 
-const createWindow = (): void => {
+const createWindow = (): BrowserWindow => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
         height: 600,
@@ -31,7 +31,7 @@ const createWindow = (): void => {
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             webSecurity: false,
             nodeIntegration: true,
-            contextIsolation: false,
+            contextIsolation: true,
         },
     });
 
@@ -40,6 +40,7 @@ const createWindow = (): void => {
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
+    return mainWindow;
 };
 
 if (process.defaultApp) {
@@ -144,10 +145,15 @@ app.on("ready", () => {
 });
 
 async function handleJoinParty(path?: Array<string>) {
-    dialog.showErrorBox(
-        "Welcome Back",
-        `You arrived from: ${path.join(" > ")}`
-    );
+    // dialog.showErrorBox(
+    //     "Welcome Back",
+    //     `You arrived from: ${path.join(" > ")}`
+    // );
+    const window = createWindow();
+    
+    window.on('ready-to-show', () => {
+        window.webContents.send('')
+    })
 }
 
 app.on("open-url", (event, url) => {
