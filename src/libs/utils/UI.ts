@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import $ from "jquery";
 import { createDeepLinkURL } from "./F1MV";
 import { getStreamData } from "./F1TV";
@@ -48,6 +49,9 @@ export const switchMode = async () => {
 };
 
 export const renderURLfield = async () => {
+    $("body").append(
+        "<p><i>If you want to join a group, please open the invite link that the owner gave you in a browser.</i></p>"
+    );
     $("body").append('<div id="urlContainer"></div>');
     $("#urlContainer").append(
         "<h2>Please provide the F1TV url of the session/video you want to watch :</h2>"
@@ -64,11 +68,18 @@ export const renderURLfield = async () => {
             $("#F1TVInfos").text("Please provide a vaild F1TV link.");
         } else {
             $("#F1TVInfos").text(`F1TV Link detected, Loading video data...`);
-            
-            const F1TV_Data = await getStreamData('WEB_DASH', contentId);
-            
-            $("#F1TVInfos").text(`${F1TV_Data[0].metadata.emfAttributes.Global_Title} - ${F1TV_Data[0].metadata.genres[0]}`);
-            window.location = await createDeepLinkURL("f1tv", ['detail', contentId, "null"]);
+
+            const F1TV_Data = await getStreamData("WEB_DASH", contentId);
+
+            $("#F1TVInfos").text(
+                `${F1TV_Data[0].metadata.emfAttributes.Global_Title} - ${F1TV_Data[0].metadata.genres[0]}`
+            );
+            // @ts-ignore
+            location = await createDeepLinkURL("f1tv", [
+                "detail",
+                contentId,
+                "null",
+            ]);
         }
     });
 };
