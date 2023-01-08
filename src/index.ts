@@ -150,10 +150,10 @@ async function handleJoinParty(path?: Array<string>) {
     //     `You arrived from: ${path.join(" > ")}`
     // );
     const window = createWindow();
-    
-    window.on('ready-to-show', () => {
-        window.webContents.send('join-party', path[1])
-    })
+
+    window.on("ready-to-show", () => {
+        window.webContents.send("join-party", path[1]);
+    });
 }
 
 app.on("open-url", (event, url) => {

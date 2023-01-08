@@ -94,9 +94,9 @@ export const renderURLfield = async () => {
                 $("#urlContainer").append(
                     '<button id="copyURL"><span class="material-symbols-outlined">link</span>Copy link</button>'
                 );
-                $('#copyURL').click(() => {
-                    navigator.clipboard.writeText(URL)
-                })
+                $("#copyURL").click(() => {
+                    navigator.clipboard.writeText(URL);
+                });
             });
         }
     });
