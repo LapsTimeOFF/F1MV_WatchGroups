@@ -75,13 +75,13 @@
 
 ### Built With
 
--   [![F1MV][f1mv]][f1mv-url]
--   [![Electron][electron]][electron-url]
--   [![Node.js][nodejs]][nodejs-url]
--   [![html][html]][html-url]
--   [![css][css]][css-url]
--   [![JQuery][jquery.com]][jquery-url]
--   [![GitHub Actions][github-actions]][github-url]
+- [![F1MV][f1mv]][f1mv-url]
+- [![Electron][electron]][electron-url]
+- [![Node.js][nodejs]][nodejs-url]
+- [![html][html]][html-url]
+- [![css][css]][css-url]
+- [![JQuery][jquery.com]][jquery-url]
+- [![GitHub Actions][github-actions]][github-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
