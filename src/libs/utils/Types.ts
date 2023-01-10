@@ -15,4 +15,4 @@ export type IParty = {
 export const IReplyType = {
     CHECK_AVAILABLE: 0,
     CREATE_PARTY: 1,
-}
+};
