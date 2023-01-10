@@ -29,6 +29,7 @@
 
 import "./index.css";
 import { initConfig } from "./libs/utils/F1MV";
+import { PartyManager } from "./libs/utils/PartyManager";
 import { initSocket } from "./libs/utils/Socket";
 import { initDarkmode } from "./libs/utils/UI";
 
@@ -40,11 +41,10 @@ console.log("[F1MV] Starting init F1MV Config");
 const config = initConfig();
 console.log("[F1MV] F1MV Config Init finished");
 
-console.log("[Socket] Starting init Socket Config");
-initSocket();
-console.log("[Socket] Socket Config Init finished");
-
 // @ts-ignore
 window.electronAPI.handleJoin((event: any, value: any) => {
     console.log(event, value);
 });
+
+// @ts-ignore
+window.PartyManager = PartyManager;

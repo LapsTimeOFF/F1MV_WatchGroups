@@ -7,14 +7,11 @@ export class PartyManager {
     session: string | null = null;
 
     // TODO: Join party
-    async checkParty(partyId: string): Promise<boolean> {
-        let _Data: {type: number, status: boolean};
-        await checkPartyAvailable(partyId, (data: {type: number, status: boolean}) => {
-            _Data = data;
-        });
-        if(_Data.type !== IReplyType.CHECK_AVAILABLE) return false;
-    
-        return _Data.status;
+    async checkParty(partyId: string): Promise<any> {
+        const data = await checkPartyAvailable(partyId);
+        if (data.type !== IReplyType.CHECK_AVAILABLE) return false;
+
+        return data;
     }
 
     async createParty(session: string): Promise<string> {

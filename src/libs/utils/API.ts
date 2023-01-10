@@ -3,18 +3,38 @@ import { IParty, IReplyType } from "./Types";
 import { makeid } from "./utils";
 
 export const defineNewParty = async (party: IParty) => {
-    socket.emit("newParty", party);
+    const uuidConversation = makeid(10);
+
+    const req = await fetch(
+        `http://lapstimevpn.chickenkiller.com:3002/api/v1/request`,
+        {
+            body: JSON.stringify({
+                uuidConversation,
+                type: IReplyType.CREATE_PARTY,
+                partyId: party.partyId,
+                session: party.session,
+            }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+        }
+    );
+    return await req.json();
 };
 
-export const checkPartyAvailable = async (partyId: string, callback: any): Promise<void> => {
+export const checkPartyAvailable = async (partyId: string): Promise<any> => {
     const uuidConversation = makeid(10);
-    
-    socket.on('reply'+uuidConversation, (data: any) => {
-        return callback(data);
-    })
-    socket.emit('request', {
-        uuidConversation,
-        type: IReplyType.CHECK_AVAILABLE,
-        partyId
-    })
-}
+
+    const req = await fetch(
+        `http://lapstimevpn.chickenkiller.com:3002/api/v1/request`,
+        {
+            body: JSON.stringify({
+                uuidConversation,
+                type: IReplyType.CHECK_AVAILABLE,
+                partyId,
+            }),
+            headers: { "Content-Type": "application/json" },
+            method: "POST",
+        }
+    );
+    return await req.json();
+};

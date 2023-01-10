@@ -153,7 +153,7 @@ async function handleJoinParty(path?: Array<string>) {
     // );
     const window = createWindow();
 
-    window.on("ready-to-show", () => {
+    window.on("focus", () => {
         window.webContents.send("join-party", path[1]);
     });
 }
