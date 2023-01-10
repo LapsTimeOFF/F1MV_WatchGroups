@@ -3,5 +3,5 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 contextBridge.exposeInMainWorld("electronAPI", {
-    requestJoin: () => ipcRenderer.invoke('join')
+    requestJoin: () => ipcRenderer.invoke("join"),
 });
