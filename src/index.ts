@@ -156,11 +156,10 @@ app.on("ready", () => {
 async function handleJoinParty(path?: Array<string>) {
     console.log("Here");
     const window = createWindow();
-    
+
     ipcMain.handle("join", () => {
         return path[1];
     });
-
 }
 
 app.on("open-url", (event, url) => {
