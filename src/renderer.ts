@@ -48,14 +48,11 @@ import { initDarkmode } from "./libs/utils/UI";
     } catch (error) {
         console.log("No join session in progress detected or an error occured");
     }
-    console.log(
-        "[JOIN] OK"
-    );
+    console.log("[JOIN] OK");
 
     console.log("[F1MV] Starting init F1MV Config");
     const config = initConfig(joinInProgress === null ? false : true);
     console.log("[F1MV] F1MV Config Init finished");
-
 
     // @ts-ignore
     window.PartyManager = PartyManager;
