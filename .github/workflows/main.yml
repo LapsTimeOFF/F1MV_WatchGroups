@@ -1,5 +1,10 @@
 name: Main
 
+on:
+  workflow_dispatch:
+  push:
+    branches: ['*']
+
 jobs:
   checking-format:
     runs-on: ubuntu-latest
