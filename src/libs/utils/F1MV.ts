@@ -7,7 +7,7 @@ import $ from "jquery";
 import { renderURLfield } from "./UI";
 import { IF1MV_DL_APP_match, IF1MV_DL_host } from "./Types";
 
-export const initConfig = async () => {
+export const initConfig = async (joinning: boolean): Promise<Config> => {
     const instance = await discoverF1MVInstances("localhost").catch(
         (e: Error) => {
             if (e === noInstanceFounded) {

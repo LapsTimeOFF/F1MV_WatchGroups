@@ -150,50 +150,77 @@ app.on("ready", () => {
             });
         }
     );
-    createWindow();
+    createWindow().webContents.executeJavaScript(
+        `document.getElementsByTagName('h1')[0].innerHTML = "${process.argv}"`
+    );
 });
 
 async function handleJoinParty(path?: Array<string>) {
     console.log("Here");
-    const window = createWindow();
+
+    let window: BrowserWindow | null;
+
+    const { response } = await dialog.showMessageBox({
+        type: "info",
+        message: `You're currently trying to join a party with the public key "${path[1]}".\nAre you sure you want to continue ?`,
+        title: "Join a party",
+        buttons: ["Yes", "No"],
+    });
+
+    switch (response) {
+        case 0:
+            createWindow().webContents.executeJavaScript(
+                `document.getElementsByTagName('h1')[0].innerHTML = "${process.argv}"`
+            );
+            break;
+        case 1:
+            app.quit();
+            break;
+
+        default:
+            break;
+    }
 
     ipcMain.handle("join", () => {
         return path[1];
     });
 }
 
-app.on("open-url", (event, url) => {
-    // dialog.showErrorBox("Welcome Back", `You arrived from: ${url}`);
+app.on("will-finish-launching", () => {
+    app.on("open-url", (event, url) => {
+        event.preventDefault();
+        // dialog.showErrorBox("Welcome Back", `You arrived from: ${url}`);
 
-    let path = url.slice("F1MV_WatchGroups".length + 3).split("/");
+        let path = url.slice("F1MV_WatchGroups".length + 3).split("/");
 
-    const router: IRouter[] = [
-        {
-            host: "party",
-            match: /(join)\/.{6}/gm,
-            handler: handleJoinParty,
-        },
-    ];
-    // dialog.showErrorBox("Welcome Back", `You arrived from: ${path.join(' > ')}`);
+        const router: IRouter[] = [
+            {
+                host: "party",
+                match: /(join)\/.{6}/gm,
+                handler: handleJoinParty,
+            },
+        ];
+        // dialog.showErrorBox("Welcome Back", `You arrived from: ${path.join(' > ')}`);
 
-    for (let _i = 0; _i < router.length; _i++) {
-        const route: IRouter = router[_i];
-        console.log(route);
-        console.log(path);
+        for (let _i = 0; _i < router.length; _i++) {
+            const route: IRouter = router[_i];
+            console.log(route);
+            console.log(path);
 
-        if (route.host === path[0]) {
-            console.log("Here");
-            path = path.filter((e) => e !== route.host);
-            console.log(path.join("/"));
-            console.log(route.match);
-            console.log(route.match.test(path.join("/")));
-            console.log(route.match.test(path.join("/")) === true);
-            if (route.match.test(path.join("/")) === true) {
+            if (route.host === path[0]) {
                 console.log("Here");
-                route.handler(path);
+                path = path.filter((e) => e !== route.host);
+                console.log(path.join("/"));
+                console.log(route.match);
+                console.log(route.match.test(path.join("/")));
+                console.log(route.match.test(path.join("/")) === true);
+                if (route.match.test(path.join("/")) === true) {
+                    console.log("Here");
+                    route.handler(path);
+                }
             }
         }
-    }
+    });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common

@@ -30,7 +30,6 @@
 import "./index.css";
 import { initConfig } from "./libs/utils/F1MV";
 import { PartyManager } from "./libs/utils/PartyManager";
-import { initSocket } from "./libs/utils/Socket";
 import { initDarkmode } from "./libs/utils/UI";
 
 (async () => {
@@ -38,14 +37,10 @@ import { initDarkmode } from "./libs/utils/UI";
     initDarkmode();
     console.log("[UI] UI Init finished");
 
-    console.log("[F1MV] Starting init F1MV Config");
-    const config = initConfig();
-    console.log("[F1MV] F1MV Config Init finished");
-
     console.log(
         "[JOIN] Asking to the main proccess if a join is in progress..."
     );
-    let joinInProgress;
+    let joinInProgress: string | null = null;
     try {
         // @ts-ignore
         joinInProgress = await window.electronAPI.requestJoin();
@@ -54,8 +49,13 @@ import { initDarkmode } from "./libs/utils/UI";
         console.log("No join session in progress detected or an error occured");
     }
     console.log(
-        "[JOIN] Asking to the main proccess if a join is in progress..."
+        "[JOIN] OK"
     );
+
+    console.log("[F1MV] Starting init F1MV Config");
+    const config = initConfig(joinInProgress === null ? false : true);
+    console.log("[F1MV] F1MV Config Init finished");
+
 
     // @ts-ignore
     window.PartyManager = PartyManager;
