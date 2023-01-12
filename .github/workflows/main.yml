@@ -40,7 +40,7 @@ jobs:
 
       - name: Check the formating
         run: npx -y prettier --check "src/**/*.ts"
-  fomating-files:
+  formating-files:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository
