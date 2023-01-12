@@ -29,6 +29,8 @@ const privileges = {
     stream: true,
 };
 
+let mainWindow: BrowserWindow | null;
+
 const createWindow = (): BrowserWindow => {
     // Create the browser window.
     const mainWindow = new BrowserWindow({
@@ -150,10 +152,64 @@ app.on("ready", () => {
             });
         }
     );
-    createWindow().webContents.executeJavaScript(
-        `document.getElementsByTagName('h1')[0].innerHTML = "${process.argv}"`
-    );
+    mainWindow = createWindow();
 });
+
+const openURL = (event: { preventDefault: () => void }, url: string): void => {
+    event.preventDefault();
+    // dialog.showErrorBox("Welcome Back", `You arrived from: ${url}`);
+
+    let path = url.slice("F1MV_WatchGroups".length + 3).split("/");
+
+    const router: IRouter[] = [
+        {
+            host: "party",
+            match: /(join)\/.{6}/gm,
+            handler: handleJoinParty,
+        },
+    ];
+    // dialog.showErrorBox("Welcome Back", `You arrived from: ${path.join(' > ')}`);
+
+    for (let _i = 0; _i < router.length; _i++) {
+        const route: IRouter = router[_i];
+        console.log(route);
+        console.log(path);
+
+        if (route.host === path[0]) {
+            console.log("Here");
+            path = path.filter((e: string) => e !== route.host);
+            console.log(path.join("/"));
+            console.log(route.match);
+            console.log(route.match.test(path.join("/")));
+            console.log(route.match.test(path.join("/")) === true);
+            if (route.match.test(path.join("/")) === true) {
+                console.log("Here");
+                route.handler(path);
+            }
+        }
+    }
+};
+const gotTheLock = app.requestSingleInstanceLock();
+
+if (!gotTheLock) {
+    app.quit();
+} else {
+    app.on("second-instance", (event, commandLine, workingDirectory) => {
+        // Someone tried to run a second instance, we should focus our window.
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            mainWindow.focus();
+        }
+    });
+
+    // Create mainWindow, load the rest of the app, etc...
+    app.whenReady().then(() => {
+        createWindow();
+    });
+
+    // Handle the protocol. In this case, we choose to show an Error Box.
+    app.on("open-url", openURL);
+}
 
 async function handleJoinParty(path?: Array<string>) {
     console.log("Here");
@@ -187,40 +243,7 @@ async function handleJoinParty(path?: Array<string>) {
 }
 
 app.on("will-finish-launching", () => {
-    app.on("open-url", (event, url) => {
-        event.preventDefault();
-        // dialog.showErrorBox("Welcome Back", `You arrived from: ${url}`);
-
-        let path = url.slice("F1MV_WatchGroups".length + 3).split("/");
-
-        const router: IRouter[] = [
-            {
-                host: "party",
-                match: /(join)\/.{6}/gm,
-                handler: handleJoinParty,
-            },
-        ];
-        // dialog.showErrorBox("Welcome Back", `You arrived from: ${path.join(' > ')}`);
-
-        for (let _i = 0; _i < router.length; _i++) {
-            const route: IRouter = router[_i];
-            console.log(route);
-            console.log(path);
-
-            if (route.host === path[0]) {
-                console.log("Here");
-                path = path.filter((e) => e !== route.host);
-                console.log(path.join("/"));
-                console.log(route.match);
-                console.log(route.match.test(path.join("/")));
-                console.log(route.match.test(path.join("/")) === true);
-                if (route.match.test(path.join("/")) === true) {
-                    console.log("Here");
-                    route.handler(path);
-                }
-            }
-        }
-    });
+    app.on("open-url", openURL);
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
