@@ -10,7 +10,7 @@
         "make": "electron-forge make",
         "publish": "electron-forge publish",
         "lint": "eslint --ext .ts,.tsx .",
-        "wdio": "wdio run wdio.conf.ts"
+        "test": "playwright test"
     },
     "keywords": [],
     "author": {
