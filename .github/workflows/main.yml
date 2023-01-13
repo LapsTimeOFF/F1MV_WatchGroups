@@ -403,7 +403,7 @@ jobs:
   delete-artifacts:
     runs-on: ubuntu-latest
     needs: ['test-windows', 'test-linux', 'test-darwin']
-    if: ${{ alaways() }}
+    if: true
 
     steps:
       - name: Delete main build artifact
